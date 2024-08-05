@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
     <Folder Include="Identity\" />
     <Folder Include="ValueObjects\" />
     <Folder Include="Settings\" />
