@@ -28,5 +28,12 @@ namespace BookWiseSaas.Domain.Entities
         public ICollection<Book> Books { get; set; } // Siparişteki kitaplar
 
         public ICollection<Recommendation> Recommendations { get; set; } // Siparişteki öneriler
+
+        public string UserPreferences { get; set; }
+        public string Mood { get; set; }
+        public int MaxResults { get; set; }
+        public string Language { get; set; }
+        public string PreviousReads { get; set; }
+        public int MinimumRating { get; set; }
     }
 }
