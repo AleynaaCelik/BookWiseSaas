@@ -9,7 +9,8 @@
   <ItemGroup>
     <Folder Include="Common\Models\Dtos\User\" />
     <Folder Include="Common\Translations\" />
-    <Folder Include="Features\Orders\Queries\" />
+    <Folder Include="Features\Orders\Queries\GetAllCommunity\" />
+    <Folder Include="Features\Orders\Queries\GetById\" />
   </ItemGroup>
 
   <ItemGroup>
