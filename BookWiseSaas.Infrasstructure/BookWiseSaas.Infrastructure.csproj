@@ -7,13 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Persistance\Configuration\" />
     <Folder Include="Persistance\Migrations\ApplicationDB\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="IdentityServer4.EntityFramework.Storage" Version="4.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BookWiseSaas.Domain\BookWiseSaas.Domain.csproj" />
   </ItemGroup>
 
 </Project>
