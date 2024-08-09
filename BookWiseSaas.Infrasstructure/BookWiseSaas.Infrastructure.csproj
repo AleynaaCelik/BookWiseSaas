@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Persistance\Migrations\ApplicationDB\" />
+    <Folder Include="Persistance\Contexts\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
