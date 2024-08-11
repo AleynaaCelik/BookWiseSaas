@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Persistance\Migrations\ApplicationDB\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
