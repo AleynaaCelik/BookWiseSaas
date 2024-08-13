@@ -1,0 +1,6 @@
+@BookWiseSaas.WebApi_HostAddress = http://localhost:5253
+
+GET {{BookWiseSaas.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
