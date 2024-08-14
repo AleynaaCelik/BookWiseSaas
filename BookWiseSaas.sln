@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWiseSaas.Application", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWiseSaas.Infrastructure", "BookWiseSaas.Infrasstructure\BookWiseSaas.Infrastructure.csproj", "{182FE49C-9CC6-4116-9F0A-0DA86D053F30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWiseSaas.WebApi", "BookWiseSaas.WebApi\BookWiseSaas.WebApi.csproj", "{516B4214-46F7-4DA0-A9D9-7D5A42033DDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWiseSaas.WebApi", "BookWiseSaas.WebApi\BookWiseSaas.WebApi.csproj", "{516B4214-46F7-4DA0-A9D9-7D5A42033DDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWiseSaas.WasmClient", "BookWiseSaas.WasmClient\BookWiseSaas.WasmClient.csproj", "{750FA7EE-20FC-4E16-AEDF-2C85BFCB7904}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{516B4214-46F7-4DA0-A9D9-7D5A42033DDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{516B4214-46F7-4DA0-A9D9-7D5A42033DDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{516B4214-46F7-4DA0-A9D9-7D5A42033DDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{750FA7EE-20FC-4E16-AEDF-2C85BFCB7904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{750FA7EE-20FC-4E16-AEDF-2C85BFCB7904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{750FA7EE-20FC-4E16-AEDF-2C85BFCB7904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{750FA7EE-20FC-4E16-AEDF-2C85BFCB7904}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
