@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWiseSaas.Infrastructure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWiseSaas.WebApi", "BookWiseSaas.WebApi\BookWiseSaas.WebApi.csproj", "{516B4214-46F7-4DA0-A9D9-7D5A42033DDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWiseSaas.WasmClient", "BookWiseSaas.WasmClient\BookWiseSaas.WasmClient.csproj", "{750FA7EE-20FC-4E16-AEDF-2C85BFCB7904}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWiseSaas.WasmClient", "BookWiseSaas.WasmClient\BookWiseSaas.WasmClient.csproj", "{750FA7EE-20FC-4E16-AEDF-2C85BFCB7904}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
