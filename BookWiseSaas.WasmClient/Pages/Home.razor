@@ -57,17 +57,11 @@
     </div>
 </div>
 
-@code
-{
-
+@code {
     private async Task Logout()
     {
         await LocalStorage.RemoveItemAsync("cto");
-
         await AuthStateProvider.GetAuthenticationStateAsync();
-
-
         ToasterService.ShowSuccess("Logout successful");
     }
-
 }
