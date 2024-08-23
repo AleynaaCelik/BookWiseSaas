@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Content Remove="Layout\MainLayout.razor" />
+    <Content Remove="Pages\RegisterPage.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,15 +21,21 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Layout\MainLayout.razor" />
+    <_ContentIncludedByDefault Remove="Pages\RegisterPage.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Layout\MainLayout.razor" />
+    <None Include="Pages\RegisterPage.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
     <PackageReference Include="Blazored.Toast" Version="4.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\RegisterPage.razor" />
   </ItemGroup>
 
 </Project>
