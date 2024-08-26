@@ -1,11 +1,10 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
+# Base stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
+# Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
@@ -15,11 +14,27 @@ COPY . .
 WORKDIR "/src/BookWiseSaas.WebApi"
 RUN dotnet build "./BookWiseSaas.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
+# Publish stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./BookWiseSaas.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
+# Final stage
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+# Optional: Set environment variables
+ENV ASPNETCORE_URLS=http://+:8080
+ENV ASPNETCORE_ENVIRONMENT=Production
+ENV Logging__LogLevel__Default=Information
+
+# Optional: Add a healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s \
+  CMD curl --fail http://localhost:8080/health || exit 1
+
+# Optional: Run as a non-root user
+RUN addgroup --system appgroup && adduser --system appuser --ingroup appgroup
+USER appuser:appgroup
+
 ENTRYPOINT ["dotnet", "BookWiseSaas.WebApi.dll"]
