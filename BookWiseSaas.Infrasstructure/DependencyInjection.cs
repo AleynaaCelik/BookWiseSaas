@@ -1,14 +1,16 @@
-﻿using MextFullstackSaaS.Application.Common.Interfaces;
-using MextFullstackSaaS.Domain.Identity;
-using MextFullstackSaaS.Domain.Settings;
-using MextFullstackSaaS.Infrastructure.Persistence.Contexts;
-using MextFullstackSaaS.Infrastructure.Services;
+﻿using BookWiseSaas.Application.Common.Interfaces;
+using BookWiseSaas.Domain.Identity;
+using BookWiseSaas.Domain.Settings;
+using BookWiseSaas.Infrastructure.Persistance.Contexts;
+using BookWiseSaas.Infrastructure.Persistence.Contexts;
+using BookWiseSaas.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenAI.Extensions;
 using Resend;
+
 
 
 namespace MextFullstackSaaS.Infrastructure
