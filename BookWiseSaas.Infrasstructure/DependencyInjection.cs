@@ -1,4 +1,5 @@
 ﻿using BookWiseSaas.Application.Common.Interfaces;
+using BookWiseSaas.Domain.Entities;
 using BookWiseSaas.Domain.Identity;
 using BookWiseSaas.Domain.Settings;
 using BookWiseSaas.Infrastructure.Persistance.Contexts;
@@ -10,66 +11,68 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenAI.Extensions;
 using Resend;
+using System.Data;
 
-
-
-namespace MextFullstackSaaS.Infrastructure
+namespace BookWiseSaas.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services,IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IApplicationDbContext, ApplicationDbContext>(
-                container => container.GetRequiredService<ApplicationDbContext>());
-
-            services.AddDbContext<ApplicationDbContext>(options => 
+            // Database Context Configuration
+            services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
-            services.Configure<JwtSettings>(jwtSettings => configuration.GetSection("JwtSettings").Bind(jwtSettings));
-            services.Configure<GoogleSettings>(googleSettings => configuration.GetSection("GoogleSettings").Bind(googleSettings));
-            services.Configure<IyzicoSettings>(iyzicoSettings => configuration.GetSection("IyzicoSettings").Bind(iyzicoSettings));
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>(provider =>
+                provider.GetRequiredService<ApplicationDbContext>());
 
+            // Identity Configuration
             services.AddIdentity<User, Role>(options =>
-                {
-                    options.Password.RequireDigit = false;
-                    options.Password.RequiredLength = 6;
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireUppercase = false;
-
-                    options.User.RequireUniqueEmail = true;
-
-                })
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.User.RequireUniqueEmail = true;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-          
-            // // Sets the token lifespan to three hours for the email confirmation token
-            // services.Configure<DataProtectionTokenProviderOptions>(options =>
-            // {
-            //     options.TokenLifespan = TimeSpan.FromHours(3); // Sets the expiry to three hours
-            // });
-            
+
+            // Service Configurations
+            services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
+            services.Configure<GoogleSettings>(configuration.GetSection(nameof(GoogleSettings)));
+            services.Configure<IyzicoSettings>(configuration.GetSection(nameof(IyzicoSettings)));
+
+            // Application Services
             services.AddScoped<IJwtService, JwtManager>();
             services.AddScoped<IIdentityService, IdentityManager>();
             services.AddScoped<IEmailService, ResendEmailManager>();
             services.AddScoped<IObjectStorageService, GoogleObjectStorageManager>();
             services.AddScoped<IPaymentService, IyzicoPaymentManager>();
 
-            //OpenAI
-            services.AddOpenAIService(settings => 
-                settings.ApiKey = configuration.GetSection("OpenAIApiKey").Value!);
-
+            // OpenAI Service Configuration
+            var openAiApiKey = configuration.GetSection("OpenAIApiKey").Value;
+            if (string.IsNullOrWhiteSpace(openAiApiKey))
+            {
+                throw new ArgumentNullException(nameof(openAiApiKey), "OpenAI API Key must be provided.");
+            }
+            services.AddOpenAIService(settings => settings.ApiKey = openAiApiKey);
             services.AddScoped<IOpenAIService, OpenAIManager>();
-            
-            // Resend
+
+            // Resend Service Configuration
             services.AddOptions();
             services.AddHttpClient<ResendClient>();
-            services.Configure<ResendClientOptions>( o =>
+            services.Configure<ResendClientOptions>(options =>
             {
-                o.ApiToken = configuration.GetSection("ReSendApiKey").Value!;
-            } );
+                var apiToken = configuration.GetSection("ReSendApiKey").Value;
+                if (string.IsNullOrWhiteSpace(apiToken))
+                {
+                    throw new ArgumentNullException(nameof(apiToken), "Resend API Token must be provided.");
+                }
+                options.ApiToken = apiToken;
+            });
             services.AddTransient<IResend, ResendClient>();
-            
 
             return services;
         }
