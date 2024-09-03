@@ -1,20 +1,19 @@
-using BookWiseSaas.Application;
-using BookWiseSaas.Application.Common.Interfaces;
-using BookWiseSaas.Domain.Settings;
-using BookWiseSaas.Infrastructure;
-using BookWiseSaas.WebApi;
-using BookWiseSaas.WebApi.Filters;
-using BookWiseSaas.WebApi.Hubs;
-using BookWiseSaas.WebApi.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using Serilog;
+using BookWiseSaas.Application;  // Application katmanýný kullanmak için gerekli
+using BookWiseSaas.Application.Common.Interfaces;  // Common interfaces için gerekli
+using BookWiseSaas.Domain.Settings;  // Domain katmanýndaki ayar sýnýflarý için gerekli
+using BookWiseSaas.Infrastructure;  // Infrastructure katmanýný kullanmak için gerekli
+using BookWiseSaas.WebApi;  // WebApi katmanýndaki sýnýflar için gerekli
+using BookWiseSaas.WebApi.Filters;  // WebApi'deki filtreler için gerekli
+using BookWiseSaas.WebApi.Hubs;  // SignalR hub'larý için gerekli
+using BookWiseSaas.WebApi.Services;  // WebApi servisleri için gerekli
+using Microsoft.AspNetCore.Builder;  // ASP.NET Core uygulamasýný yapýlandýrmak için gerekli
+using Microsoft.AspNetCore.Mvc;  // MVC ayarlarý için gerekli
+using Microsoft.Extensions.Configuration;  // Configuration ayarlarý için gerekli
+using Microsoft.Extensions.Options;  // Options pattern için gerekli
+using Serilog;  // Serilog için gerekli
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
-    // .WriteTo.File("C:\\Users\\alper\\Desktop\\log.txt", rollingInterval: RollingInterval.Day)
     .WriteTo.File("/Users/altudev/Desktop/logs.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
@@ -32,11 +31,11 @@ try
         opt.Filters.Add<GlobalExceptionFilter>();
     });
 
-    builder.Services.AddApplication();
+    builder.Services.AddApplication();  // Application katmaný servislerini ekliyoruz
 
-    builder.Services.AddInfrastructure(builder.Configuration);
+    builder.Services.AddInfrastructure(builder.Configuration);  // Infrastructure katmaný servislerini ekliyoruz
 
-    builder.Services.AddWebServices(builder.Configuration);
+    builder.Services.AddWebServices(builder.Configuration);  // WebApi katmaný servislerini ekliyoruz
 
     builder.Services.Configure<ApiBehaviorOptions>(options =>
     {
