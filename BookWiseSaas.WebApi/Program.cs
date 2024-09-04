@@ -69,7 +69,7 @@ try
 
     app.MapControllers();
 
-    app.MapHub<OrderHub>("/hubs/orderHub");
+   // app.MapHub<OrderHub>("/hubs/orderHub");
 
     app.Run();
 

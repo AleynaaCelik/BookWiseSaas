@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Http;
+﻿using MediatR;  // ISender interface'i için gerekli
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using BookWiseSaas.Domain.Settings;  // GoogleSettings sınıfı için gerekli
 
 namespace BookWiseSaas.WebApi.Controllers
 {
@@ -13,10 +13,10 @@ namespace BookWiseSaas.WebApi.Controllers
         private readonly GoogleSettings _googleSettings;
         private const string RedirectUri = "https://localhost:7281/api/UsersAuth/signin-google";
         private readonly string _googleAuthorizationUrl;
+
         public UsersAuthController(ISender mediatr, IOptions<GoogleSettings> googleSettings)
         {
             _mediatr = mediatr;
-
             _googleSettings = googleSettings.Value;
 
             _googleAuthorizationUrl = $"https://accounts.google.com/o/oauth2/v2/auth?" +
@@ -52,16 +52,15 @@ namespace BookWiseSaas.WebApi.Controllers
 
             var payload = await GoogleJsonWebSignature.ValidateAsync(tokenResponse.IdToken);
 
-            var command =
-                new UserAuthSocialLoginCommand(payload.Email, payload.GivenName, payload.FamilyName, payload.Picture);
+            var command = new UserAuthSocialLoginCommand(payload.Email, payload.GivenName, payload.FamilyName, payload.Picture);
 
             var responseDto = await _mediatr.Send(command, cancellationToken);
 
             var queryParams = new Dictionary<string, string>()
-        {
-            {"access_token",responseDto.Data.Token },
-            {"expiry_date",responseDto.Data.Expires.ToBinary().ToString() },
-        };
+            {
+                {"access_token",responseDto.Data.Token },
+                {"expiry_date",responseDto.Data.Expires.ToBinary().ToString() },
+            };
 
             var formContent = new FormUrlEncodedContent(queryParams);
 
@@ -71,7 +70,6 @@ namespace BookWiseSaas.WebApi.Controllers
 
             return Redirect(redirectUrl);
         }
-
 
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync(UserAuthRegisterCommand command, CancellationToken cancellationToken)
